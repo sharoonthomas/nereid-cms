@@ -198,7 +198,7 @@ class MenuItem(ModelSQL, ModelView, CMSMenuItemMixin):
 
         if self.type_ == 'record':
             res['record'] = self.record
-            res['link'] = has_request_context() and self.record.get_absolute_url()
+            res['link'] = self.record.get_absolute_url()
             # Fetch record's menu item with depth 0, as childrens are not
             # needed. This allow downstream modules to add new keys to menu
             # item based on records. Like adding an image to article menu item.
@@ -846,7 +846,7 @@ class Article(Workflow, ModelSQL, ModelView, CMSMenuItemMixin):
         return {
             'record': self,
             'title': self.title,
-            'link': has_request_context() and self.get_absolute_url(),
+            'link': self.get_absolute_url(),
         }
 
     def atom_id(self):
@@ -887,7 +887,7 @@ class Article(Workflow, ModelSQL, ModelView, CMSMenuItemMixin):
                 'link': {
                     'rel': 'alternate',
                     'type': 'text/html',
-                    'href': has_request_context() and self.get_absolute_url(external=True),
+                    'href': self.get_absolute_url(external=True),
                 },
                 'category': [
                     category.serialize(purpose=purpose)
